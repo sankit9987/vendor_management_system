@@ -8,12 +8,12 @@ urlpatterns = [
         name="vendor_list_create",
     ),
     path(
-        "/<int:pk>",
+        "<int:pk>",
         views.VendorDetailUpdateDeleteAPIView.as_view(),
         name="vendors_detail_update_delete",
     ),
     path(
-        "/<int:pk>/performace",
+        "<int:pk>/performace",
         views.VendorPerformanceAPIView.as_view(),
         name="vendore_performace",
     ),
