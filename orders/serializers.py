@@ -7,6 +7,7 @@ class OrdersSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             "id",
+            "vendor",
             "order_number",
             "items",
             "delivery_date",
@@ -14,4 +15,13 @@ class OrdersSerializer(serializers.ModelSerializer):
             "quantity",
             "status",
             "issue_date",
+            "quality_rate",
+            "acknowledged_date",
         ]
+        read_only_fields = (
+            "order_number",
+            "delivery_date",
+            "order_date",
+            "issue_date",
+            "acknowledged_date",
+        )

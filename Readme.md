@@ -4,7 +4,7 @@
 
 ## Installation
 
-This Project requires Python 3.11.x, PostgreSQL and OS-specific dependency tools.
+This Project requires Python 3.11.x and OS-specific dependency tools.
 
 > Setting up environment and installing requirements
 
@@ -55,4 +55,11 @@ python manage.py runserver
 
 ```bash
 http:127.0.0.1:8000/swagger
+```
+
+> For run test case
+
+```bash
+# running the testcase
+python manage.py test 
 ```

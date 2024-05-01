@@ -14,12 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
-    SpectacularSwaggerView
+    SpectacularSwaggerView,
 )
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -27,16 +28,22 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/vendors', include("vendors.urls")),
-    path('api/purchase_orders', include("orders.urls")),
-    path('admin/', admin.site.urls),
-    path('', SpectacularAPIView.as_view(), name='schema'),
+    path("admin/", admin.site.urls),
+    path("api/vendors", include("vendors.urls")),
+    path("api/purchase_orders", include("orders.urls")),
+    path("admin/", admin.site.urls),
+    path("", SpectacularAPIView.as_view(), name="schema"),
     # Optional UI:
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path(
+        "swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
-

@@ -10,10 +10,12 @@ class VendorSerializer(serializers.ModelSerializer):
             "name",
             "address",
             "code",
+            "contact_number",
         ]
+        read_only_fields = ("code",)
 
 
-class VendorPerformanceSeriaizer(serializers.ManyRelatedField):
+class VendorPerformanceSeriaizer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
         fields = [
