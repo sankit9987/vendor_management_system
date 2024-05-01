@@ -3,6 +3,7 @@ from django.db import models
 from vendor_management_system.mixins import BaseModel
 # from django.core.validators import MinValueValidatorn
 
+
 # Create your models here.
 class Vendor(BaseModel):
     name = models.CharField(max_length=100)

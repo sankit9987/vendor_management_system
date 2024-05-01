@@ -1,14 +1,21 @@
 from rest_framework import serializers
-from vendors.models import Vendor, Performance
+from vendors.models import Vendor
+
 
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = "__all__"
+        fields = [
+            "id",
+            "name",
+            "address",
+            "code",
+        ]
+
 
 class VendorPerformanceSeriaizer(serializers.ManyRelatedField):
     class Meta:
-        model = Performance
+        model = Vendor
         fields = [
             "on_time_delivery_rate",
             "quality_rating_avg",

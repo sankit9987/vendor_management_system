@@ -5,9 +5,14 @@ from vendors.models import Vendor, Performance
 from django.core.validators import MinValueValidator
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.db.models import Avg, F, ExpressionWrapper, fields
-from orders.services import calculate_on_time_delivery, calculate_average_quality_rating,calculate_average_time_response
+from orders.services import (
+    calculate_on_time_delivery,
+    calculate_average_quality_rating,
+    calculate_average_time_response,)
+import datetime
 # Create your models here.
+
+
 class Order(BaseModel):
     class OrderStatus(models.IntegerChoices):
         PENDING = 1
@@ -54,28 +59,29 @@ class Order(BaseModel):
     )
     issue_date = models.DateTimeField(auto_now_add=True, editable=False,)
 
-    acknowledged_date = models.DateTimeField()
+    acknowledged_date = models.DateTimeField(null=True, blank=True,)
 
     def save(self, *args, **kwargs) -> None:
+        self.delivery_date = self.issue_date + datetime.timedelta(days=4,)
         self.order_number = f"PoNumber-{self.id}"
         return super().save(*args, **kwargs)
 
     class Meta:
         db_table = "tbl_orders"
 
+
 @receiver(post_save, sender=Order,)
 def update_vendor_performance(sender, instance, **kwargs):
     vendor_id = instance.vendor
-    vendor_performance = Performance.objects.get(vendor = vendor_id)
+    vendor_performance = Performance.objects.get(vendor=vendor_id)
 
     average_time_response = calculate_average_time_response(vendor_id)
     
-
-    on_time_delivery_rate  = calculate_on_time_delivery(vendor_id)
+    on_time_delivery_rate = calculate_on_time_delivery(vendor_id)
     quality_rating_avg = calculate_average_quality_rating(vendor_id)
     fulfillment_rate = "s"
 
-    vendor_performance.average_response_time =average_time_response
+    vendor_performance.average_response_time = average_time_response
     vendor_performance.on_time_delivery_rate = on_time_delivery_rate
     vendor_performance.quality_rating_avg = quality_rating_avg
     vendor_performance.fulfillment_rate = fulfillment_rate
