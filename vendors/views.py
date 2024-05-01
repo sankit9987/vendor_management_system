@@ -11,13 +11,13 @@ from vendors.models import Vendor
 class VendorListCreateAPIView(ListCreateAPIView):
     serializer_class = VendorSerializer
     queryset = Vendor.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class VendorDetailUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = VendorSerializer
     queryset = Vendor.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class VendorPerformanceAPIView(RetrieveAPIView):
